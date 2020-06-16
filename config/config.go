@@ -12,10 +12,11 @@ import (
 )
 
 type Config struct {
-	TvAddr    string
-	TvMac     string
-	ClientKey string
-	TvInputs  []TvInput
+	TvAddr     string
+	TvMac      string
+	ClientKey  string
+	ScreenName string
+	TvInputs   []TvInput
 }
 
 type TvInput struct {

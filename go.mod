@@ -4,7 +4,7 @@ go 1.14
 
 require (
 	github.com/AllenDang/giu v0.0.0-20200508114859-269f85b11124
-	github.com/godbus/dbus v4.1.0+incompatible // indirect
+	github.com/godbus/dbus/v5 v5.0.3
 	github.com/linde12/gowol v0.0.0-20180926075039-797e4d01634c
 	github.com/pkg/errors v0.8.1
 	github.com/rs/zerolog v1.18.0

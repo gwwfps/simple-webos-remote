@@ -10,6 +10,7 @@ func (g *GUI) settings() giu.Widget {
 		giu.InputText("TV Address", 0, &g.cfg.TvAddr),
 		giu.InputText("TV Mac", 0, &g.cfg.TvMac),
 		giu.InputText("Key", 0, &g.cfg.ClientKey),
+		giu.InputText("Screen Name", 0, &g.cfg.ScreenName),
 	}
 
 	for i, input := range g.cfg.TvInputs {

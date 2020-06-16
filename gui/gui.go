@@ -13,7 +13,8 @@ type GUI struct {
 	tvm *tvmanager.TVManager
 	cfg *config.Config
 
-	youtubeLink string
+	youtubeLink   string
+	screenEnabled bool
 
 	lastErr error
 }
