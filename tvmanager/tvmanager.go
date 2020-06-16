@@ -1,8 +1,8 @@
 package tvmanager
 
 import (
+	"fmt"
 	"github.com/gwwfps/simple-webos-remote/config"
-	"github.com/linde12/gowol"
 	"github.com/rs/zerolog/log"
 	"github.com/snabb/webostv"
 	"time"
@@ -65,6 +65,10 @@ func (m *TVManager) register() error {
 }
 
 func (m *TVManager) Close() error {
+	defer func() {
+		m.tv = nil
+	}()
+
 	if m.tv != nil {
 		return m.tv.Close()
 	}
@@ -75,18 +79,9 @@ func (m *TVManager) Connected() bool {
 	return m.tv != nil
 }
 
-func (m *TVManager) TV() *webostv.Tv {
-	return m.tv
-}
-
-func (m *TVManager) PowerOn() error {
-	packet, err := gowol.NewMagicPacket("03:AA:FF:67:64:05")
-	if err == nil {
-		err = packet.Send(m.cfg.TvAddr)
+func (m *TVManager) checkConnection() error {
+	if !m.Connected() {
+		return fmt.Errorf("not connected to TV")
 	}
-	return err
-}
-
-func (m *TVManager) PowerOff() error {
-	return m.tv.SystemTurnOff()
+	return nil
 }

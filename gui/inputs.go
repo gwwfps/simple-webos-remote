@@ -12,7 +12,7 @@ func (g *GUI) inputs() giu.Widget {
 
 func (g *GUI) buildOnClickInputsHandler(id string) func() {
 	return func() {
-		err := g.tvm.TV().TvSwitchInput(id)
+		err := g.tvm.SwitchInput(id)
 		g.updateErr(err)
 	}
 }

@@ -7,11 +7,13 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"reflect"
 	"syscall"
 )
 
 type Config struct {
 	TvAddr    string
+	TvMac     string
 	ClientKey string
 	TvInputs  []TvInput
 }
@@ -59,9 +61,12 @@ func Read() (*Config, error) {
 }
 
 func (c *Config) Save() {
-	viper.Set("TvAddr", c.TvAddr)
-	viper.Set("ClientKey", c.ClientKey)
-	viper.Set("TvInputs", c.TvInputs)
+	typ := reflect.TypeOf(*c)
+	val := reflect.ValueOf(*c)
+
+	for i := 0; i < typ.NumField(); i++ {
+		viper.Set(typ.Field(i).Name, val.Field(i).Interface())
+	}
 
 	err := viper.WriteConfig()
 	if err != nil {

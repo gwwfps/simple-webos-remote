@@ -8,6 +8,7 @@ import (
 func (g *GUI) settings() giu.Widget {
 	widgets := giu.Layout{
 		giu.InputText("TV Address", 0, &g.cfg.TvAddr),
+		giu.InputText("TV Mac", 0, &g.cfg.TvMac),
 		giu.InputText("Key", 0, &g.cfg.ClientKey),
 	}
 

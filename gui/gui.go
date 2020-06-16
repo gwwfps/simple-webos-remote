@@ -26,7 +26,7 @@ func New(tvm *tvmanager.TVManager, cfg *config.Config) *GUI {
 }
 
 func (g *GUI) Run() {
-	wnd := giu.NewMasterWindow("Remote", 600, 700, giu.MasterWindowFlagsNotResizable, g.loadFont)
+	wnd := giu.NewMasterWindow("Remote", 1000, 720, giu.MasterWindowFlagsNotResizable, g.loadFont)
 	g.style()
 	go g.refresh()
 	wnd.Main(g.loop)
@@ -42,6 +42,7 @@ func (g *GUI) loop() {
 		widgets = append(widgets,
 			g.inputs(),
 			g.apps(),
+			g.pointer(),
 			g.screen(),
 		)
 	}
