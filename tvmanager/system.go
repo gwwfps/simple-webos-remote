@@ -25,3 +25,11 @@ func (m *TVManager) PowerOff() error {
 	defer m.Close()
 	return m.tv.SystemTurnOff()
 }
+
+func (m *TVManager) OpenInfo() error {
+	if err := m.checkConnection(); err != nil {
+		return err
+	}
+
+	return m.PressButton("INFO")
+}

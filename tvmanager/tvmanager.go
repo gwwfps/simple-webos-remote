@@ -9,8 +9,9 @@ import (
 )
 
 type TVManager struct {
-	cfg *config.Config
-	tv  *webostv.Tv
+	cfg           *config.Config
+	tv            *webostv.Tv
+	pointerSocket *webostv.PointerSocket
 
 	Connecting    bool
 	ConnectionErr error
@@ -45,10 +46,15 @@ func (m *TVManager) TryConnect() {
 		m.tv = tv
 		go tv.MessageHandler()
 		err = m.register()
+
+		if err == nil {
+			err = m.DialPointerSocket()
+		}
+
 		if err != nil {
 			defer tv.Close()
 			m.tv = nil
-			log.Error().Err(err).Msg("cannot register with TV")
+			log.Error().Err(err).Msg("post-connection setup with TV failed")
 		}
 	}
 	m.ConnectionErr = err
@@ -64,9 +70,26 @@ func (m *TVManager) register() error {
 	return nil
 }
 
+func (m *TVManager) DialPointerSocket() error {
+	if m.pointerSocket != nil {
+		m.pointerSocket.Close()
+	}
+
+	socket, err := m.tv.NewPointerSocket()
+	if err == nil {
+		m.pointerSocket = socket
+	}
+	return err
+}
+
 func (m *TVManager) Close() error {
 	defer func() {
 		m.tv = nil
+		if m.pointerSocket != nil {
+			socket := m.pointerSocket
+			m.pointerSocket = nil
+			socket.Close()
+		}
 	}()
 
 	if m.tv != nil {

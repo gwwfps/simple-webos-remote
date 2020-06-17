@@ -11,6 +11,7 @@ func (g *GUI) settings() giu.Widget {
 		giu.InputText("TV Mac", 0, &g.cfg.TvMac),
 		giu.InputText("Key", 0, &g.cfg.ClientKey),
 		giu.InputText("Screen Name", 0, &g.cfg.ScreenName),
+		giu.DragIntV("Pointer Sensitivity", &g.cfg.PointerSens, 1.0, 1, 10, "%d"),
 	}
 
 	for i, input := range g.cfg.TvInputs {

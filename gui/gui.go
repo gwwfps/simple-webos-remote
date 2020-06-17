@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"github.com/AllenDang/giu"
 	"github.com/AllenDang/giu/imgui"
+	"github.com/go-gl/glfw/v3.3/glfw"
 	"github.com/gwwfps/simple-webos-remote/config"
 	"github.com/gwwfps/simple-webos-remote/tvmanager"
+	"image"
 	"time"
 )
 
@@ -15,6 +17,8 @@ type GUI struct {
 
 	youtubeLink   string
 	screenEnabled bool
+	pointerPos    image.Point
+	keysPressed   map[glfw.Key]bool
 
 	lastErr error
 }
@@ -23,11 +27,13 @@ func New(tvm *tvmanager.TVManager, cfg *config.Config) *GUI {
 	return &GUI{
 		tvm: tvm,
 		cfg: cfg,
+
+		keysPressed: make(map[glfw.Key]bool),
 	}
 }
 
 func (g *GUI) Run() {
-	wnd := giu.NewMasterWindow("Remote", 1000, 720, giu.MasterWindowFlagsNotResizable, g.loadFont)
+	wnd := giu.NewMasterWindow("Remote", 1600, 600, giu.MasterWindowFlagsNotResizable, g.loadFont)
 	g.style()
 	go g.refresh()
 	wnd.Main(g.loop)
@@ -36,21 +42,25 @@ func (g *GUI) Run() {
 func (g *GUI) loop() {
 	widgets := giu.Layout{
 		g.status(),
-		g.power(),
+		g.system(),
 	}
 
 	if g.tvm.Connected() {
 		widgets = append(widgets,
 			g.inputs(),
+			g.media(),
 			g.apps(),
-			g.pointer(),
 			g.screen(),
 		)
 	}
 
 	widgets = append(widgets, g.settings())
 
-	giu.SingleWindow("Remote", widgets)
+	var windowFlags giu.WindowFlags = imgui.WindowFlagsNoCollapse | imgui.WindowFlagsNoMove | imgui.WindowFlagsNoResize
+	giu.WindowV("Controls", nil, windowFlags, 0, 0, 640, 600, widgets)
+	if g.tvm.Connected() {
+		giu.WindowV("Pointer", nil, windowFlags, 640, 0, 960, 600, giu.Layout{g.pointer()})
+	}
 }
 
 func (g *GUI) refresh() {

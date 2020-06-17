@@ -12,11 +12,12 @@ import (
 )
 
 type Config struct {
-	TvAddr     string
-	TvMac      string
-	ClientKey  string
-	ScreenName string
-	TvInputs   []TvInput
+	TvAddr      string
+	TvMac       string
+	ClientKey   string
+	ScreenName  string
+	PointerSens int32
+	TvInputs    []TvInput
 }
 
 type TvInput struct {
@@ -32,6 +33,7 @@ func init() {
 	viper.SetConfigFile(configPath)
 
 	viper.SetDefault("TvAddr", "LGsmartTV.lan")
+	viper.SetDefault("PointerSens", 3)
 }
 
 func Read() (*Config, error) {
