@@ -16,6 +16,7 @@ type Config struct {
 	TvMac       string
 	ClientKey   string
 	ScreenName  string
+	SonosAddr   string
 	PointerSens int32
 	TvInputs    []TvInput
 }

@@ -50,7 +50,6 @@ func (g *GUI) loop() {
 			g.inputs(),
 			g.media(),
 			g.apps(),
-			g.screen(),
 		)
 	}
 

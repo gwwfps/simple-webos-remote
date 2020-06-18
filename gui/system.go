@@ -8,6 +8,7 @@ func (g *GUI) system() giu.Widget {
 		widgets = append(widgets, giu.Line(
 			giu.Button("Power Off", g.onClickSystemPowerOff),
 			giu.Button("Info", g.onClickSystemInfo),
+			giu.Button("Settings", g.onClickSystemSettings),
 		))
 	} else {
 		widgets = append(widgets, giu.Button("Power On", g.onClickSystemPowerOn))
@@ -29,5 +30,10 @@ func (g *GUI) onClickSystemPowerOff() {
 
 func (g *GUI) onClickSystemInfo() {
 	err := g.tvm.OpenInfo()
+	g.updateErr(err)
+}
+
+func (g *GUI) onClickSystemSettings() {
+	err := g.tvm.OpenSettings()
 	g.updateErr(err)
 }

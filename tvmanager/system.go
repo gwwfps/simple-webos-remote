@@ -33,3 +33,11 @@ func (m *TVManager) OpenInfo() error {
 
 	return m.PressButton("INFO")
 }
+
+func (m *TVManager) OpenSettings() error {
+	if err := m.checkConnection(); err != nil {
+		return err
+	}
+
+	return m.LaunchApp("com.palm.app.settings")
+}
