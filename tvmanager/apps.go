@@ -8,11 +8,12 @@ import (
 )
 
 const (
-	AppIdYoutube = "youtube.leanback.v4"
-	AppIdTwitch  = "tv.twitch.tv.starshot.lg"
-	AppIdNetflix = "netflix"
-	AppIdPrime   = "amazon"
-	AppIdAppleTV = "com.apple.appletv"
+	AppIdYoutube   = "youtube.leanback.v4"
+	AppIdTwitch    = "tv.twitch.tv.starshot.lg"
+	AppIdNetflix   = "netflix"
+	AppIdPrime     = "amazon"
+	AppIdAppleTV   = "com.apple.appletv"
+	AppIdAppleDAZN = "dazn"
 )
 
 func (m *TVManager) LaunchApp(id string) error {

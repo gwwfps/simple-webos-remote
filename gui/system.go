@@ -14,7 +14,7 @@ func (g *GUI) system() giu.Widget {
 		widgets = append(widgets, giu.Button("Power On", g.onClickSystemPowerOn))
 	}
 	return giu.Layout{
-		topLevelTreeNode("Power", true, widgets),
+		topLevelTreeNode("System", true, widgets),
 	}
 }
 

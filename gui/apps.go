@@ -11,6 +11,9 @@ func (g *GUI) apps() giu.Widget {
 		giu.Line(
 			giu.Button("Youtube", g.onClickAppsYoutube),
 			giu.Button("Twitch", g.onClickAppsTwitch),
+			giu.Button("DAZN", g.onClickAppsDAZN),
+		),
+		giu.Line(
 			giu.Button("Netflix", g.onClickAppsNetflix),
 			giu.Button("Prime", g.onClickAppsPrime),
 			giu.Button("AppleTV", g.onClickAppsAppleTV),
@@ -40,6 +43,11 @@ func (g *GUI) onClickAppsPrime() {
 
 func (g *GUI) onClickAppsAppleTV() {
 	err := g.tvm.LaunchApp(tvmanager.AppIdAppleTV)
+	g.updateErr(err)
+}
+
+func (g *GUI) onClickAppsDAZN() {
+	err := g.tvm.LaunchApp(tvmanager.AppIdAppleDAZN)
 	g.updateErr(err)
 }
 
